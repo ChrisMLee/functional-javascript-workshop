@@ -1,6 +1,25 @@
-function Spy(target, method) {
-  // SOLUTION GOES HERE
-  console.log('this', this);
+// function Spy(target, method) {
+//   var count = 0;
+//   // SOLUTION GOES HERE
+//   //console.log('this', this);
+//   if(this[target][method].hasOwnProperty(arguments)){
+//     console.log('called');
+//   }
+//   Spy(target, method);
+// }
+
+
+function Spy(target, method){
+  var originalFunction = target[method];
+  var result = {
+    count: 0
+  };
+
+  target[method] = function(){
+    result.count++;
+    return originalFunction.apply(this, arguments);
+  }
+  return result;
 }
 
 module.exports = Spy
